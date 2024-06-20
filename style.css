@@ -13,6 +13,8 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
     color: white;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
 }
 
 body{
@@ -21,6 +23,11 @@ body{
 
 video{
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    mask-image: linear-gradient(to bottom, transparent, black, transparent);
+    /* height: 100%; */
     object-fit: contain;
     z-index: -1;
     opacity: 0.3;
@@ -41,45 +48,149 @@ header{
 }
 
 nav{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 30px;
 }
 
-nav a{
+nav a {
     text-decoration: none;
-    /* color: white; */
     font-size: 1rem;
     transition: ease 0.3s;
-}    
+    -webkit-text-stroke: 1px transparent; /* Menambahkan text-stroke di sini */
+}
 
-nav a:hover{
+nav a:hover {
     color: var(--fg);
-    -webkit-text-stroke: 1px white;
-    font-size: 1.3rem;
+    -webkit-text-stroke: 1px white; /* Mengubah text-stroke pada hover */
+    font-size: 2.1rem; /* Ubah ukuran teks yang lebih kecil dari sebelumnya */
     font-weight: bold;
 }
 
 .cta{
     display: flex;
     justify-content: center;
+    position: relative;;
 }
 
-.cta button{
-    background-color: var(--fg);
-    padding: 10px 20px;
+.contact{
+    list-style: none;
+    transition: linear 0.5s;
+    position: absolute;
+    display: flex;
+    align-items: center;
     border-radius: 50px;
-    border: none;
     cursor: pointer;
+    padding: 10px 20px;
+}
+
+.contact img{
+    height: 30px;
+    margin: 10px 0;
+    width: 30px;
+}
+
+.contact img:hover{
+    transform: scale(1.1);
+}
+
+.contact[open]{
+    transition: ease 0.5s;
+    position: absolute;
+}
+
+.contact-summary{
+    list-style: none;
     transition: ease 0.5s;
 }
-.cta button:hover{
+
+
+.detail-contact{
+    position: relative;
+}
+
+.detail-contact .contact-icon{
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.detail-contact p{
+    top: 25%;
+    left: -400%;
+    position: absolute;
+    font-size: 1rem;
+}
+
+/* Animasi untuk muncul dari atas */
+@keyframes fadeInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contact {
+    /* Properti CSS lain */
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+}
+
+.contact[open] {
+    animation-name: fadeInFromTop;
+}
+
+.contact[close] {
+    animation-name: fadeInFromBottom;
+}
+
+/* Terapkan animasi pada details.contact[open] */
+.contact[open] .detail-contact {
+    animation: fadeInFromTop 0.5s ease-in-out forwards;
+}
+
+/* Sembunyikan summary ketika details.contact terbuka */
+.contact[open] .contact-summary {
+    display: none;
+}
+
+.cta .btn {
+    background-color: var(--fg);
+    border: 2px solid transparent; /* Tetapkan border secara default */
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, border 0.3s;
+}
+
+.cta .btn:hover {
     background-color: var(--bg);
-    border: 2px solid white;
+    border: 2px solid white; /* Mengubah border pada hover */
 }
 
 
+#main{
+    height: 100vh;
+}
 
 .main{
     /* border: 1px solid white; */
@@ -174,4 +285,9 @@ color: rgb(51, 90, 195);
 
 .slider[reverse="true"] .item{
     animation-direction: reverse;
+}
+
+#about{
+    margin-top: 50px;
+    height: 100vh;
 }

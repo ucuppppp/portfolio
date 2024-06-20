@@ -15,15 +15,49 @@
         <div class="logo">0</div>
         <nav>
             <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Project</a>
-            <a href="#">Achievement</a>
+            <a href="#about">About</a>
+            <a href="#project">Project</a>
+            <a href="#achievement">Achievement</a>
         </nav>
         <div class="cta">
-            <button>Contact Me</button>
+            <details class="contact">
+                <summary class="contact-summary">
+                    <div class="btn">Contact Me</div>
+                </summary>
+                <details class="detail-contact">
+                    <summary class="contact-icon">
+                        <img src="img/socmed/slider (1).svg" alt="">
+                    </summary>
+                    <p>0345245252</p>
+                </details>
+                <details class="detail-contact">
+                    <summary class="contact-icon">
+                        <img src="img/socmed/slider (2).svg" alt="">
+                    </summary>
+                    <p>__ucuppppp</p>
+                </details>
+                <details class="detail-contact">
+                    <summary class="contact-icon">
+                        <img src="img/socmed/slider (3).svg" alt="">
+                    </summary>
+                    <p>__ucuppppp</p>
+                </details>
+                <details class="detail-contact">
+                    <summary class="contact-icon">
+                        <img src="img/socmed/slider (4).svg" alt="">
+                    </summary>
+                    <p>__ucuppppp</p>
+                </details>
+                <details class="detail-contact">
+                    <summary class="contact-icon">
+                        <img src="img/socmed/slider (5).svg" alt="">
+                    </summary>
+                    <p>__ucuppppp</p>
+                </details>
+            </details>
         </div>
     </header>
-    <div class="container";">
+    <div class="container" id="main">
         <div class="main">
             <div class="title">
                 <h2>Hi, everyone👋 welcome to</h2>
@@ -31,7 +65,9 @@
                 <h2>- Raditya Yusuf Aslam -</h2>
             </div>
             <div class="gambar">
-                <img src="img/aingfix.png" alt="">
+                <summary>
+                    <img src="img/aingfix.png" alt="">
+                </summary>
             </div>
         </div>
     <div class="slider" style="
@@ -73,5 +109,55 @@
         </div>
     </div> -->
     </div>
+    <section id="about">
+        <div class="container">
+            <div class="title">
+                <h1>About Me</h1>
+            </div>
+            <div class="about">
+                <div class="left">
+                    <img src="img/ucup.png" alt="">
+                </div>
+                <div class="right">
+                    <h1>Raditya Yusuf Aslam</h1>
+        </div>
+    </section>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const contact = document.querySelector('.contact');
+        const detailContacts = document.querySelectorAll('.detail-contact');
+
+        // Event listener untuk menutup details saat klik di luar
+        document.body.addEventListener('click', function(event) {
+            if (!contact.contains(event.target)) {
+                closeDetails();
+            }
+        });
+
+        // Event listener untuk menampilkan details saat hover
+        detailContacts.forEach(function(detailContact) {
+            detailContact.addEventListener('mouseover', function(event) {
+                if(detailContact.getAttribute('open') !== 'true') {
+                    openDetails();
+                }
+            });
+        });
+
+        // Event listener untuk menutup details saat scroll
+        window.addEventListener('scroll', function() {
+            closeDetails();
+        });
+
+        // Fungsi untuk menutup details
+        function closeDetails() {
+            contact.removeAttribute('open');
+        }
+
+        // Fungsi untuk membuka details
+        function openDetails() {
+            contact.setAttribute('open', 'true');
+        }
+    });
+</script>
 </body>
 </html>
