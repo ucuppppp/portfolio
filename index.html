@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="index.css" />
     <title>Ucup</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   </head>
   <body>
     <h1 class="counter">0</h1>
@@ -32,21 +35,68 @@
           <a href="">Playground</a>
         </div>
       </nav>
-
       <div class="header">
-        <div class="h1">u</div>
-        <div class="h1">c</div>
-        <div class="h1">u</div>
-        <div class="h1">p</div>
-        <div class="h1">.</div>
+        <div class="title">
+          <div class="h1">u</div>
+          <div class="h1">c</div>
+          <div class="h1">u</div>
+          <div class="h1">p</div>
+          <div class="h1">.</div>
+        </div>
+        <div class="title2">
+          <span>-</span>
+          <br>
+          <span>P</span>
+          <span>O</span>
+          <span>R</span>
+          <span>T</span>
+          <span>F</span>
+          <span>O</span>
+          <span>L</span>
+          <span>I</span>
+          <span>O</span>
+          <br>
+          <span>-</span>
+        </div>
       </div>
       <div class="hero">
         <img src="img/hero-1.jpg" alt="" />
+        <span class="quote"
+          >"Creativity is seeing what others see and thinking what no one else
+          ever thought."</span
+        >
+        <span class="author">Albert Einstein.</span>
       </div>
     </div>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>Links</h3>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="playground.html">Playground</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Social Media</h3>
+          <ul>
+            <li><a href="#">Whatsapp</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">X</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollToPlugin);
+
+    window.addEventListener("DOMContentLoaded", function () {
+      initializeAnimations();
+    });
+
     function startLoader() {
       let counterElement = document.querySelector(".counter");
       let currentValue = 0;
@@ -70,74 +120,96 @@
       updateCounter();
     }
 
-    startLoader();
-    
-    let counter = document.querySelector(".counter");
-    let overlay = document.querySelector(".overlay");
+    function initializeAnimations() {
+      startLoader();
 
-    gsap.to(".counter", 0.25, {
-      delay: 3.5,
+      let counter = document.querySelector(".counter");
+      let overlay = document.querySelector(".overlay");
+
+      gsap.to(".counter", 0.25, {
+        delay: 3.5,
         opacity: 0,
         onComplete: () => {
-            counter.style.zIndex = -2
-        }
-    })
+          counter.style.zIndex = -2;
+        },
+      });
 
-    gsap.to(".bar", 1.5, {
+      gsap.to(".bar", 1.5, {
         delay: 3.5,
         height: 0,
         stagger: {
-            amount: 0.5
+          amount: 0.5,
         },
         ease: "power4.inOut",
         onComplete: () => {
-            overlay.style.zIndex = -1
-        }
-    })
+          overlay.style.zIndex = -1;
+        },
+      });
 
-    gsap.from(".h1", 1.5, {
+      gsap.from(".h1", 1.5, {
         delay: 4,
         y: 700,
         stagger: {
-            amount: 0.5
+          amount: 0.5,
         },
-        ease: "power4.inOut"
-    })
+        ease: "power4.inOut",
+      });
 
-    gsap.from(".hero", 2, {
-        delay: 4.5,
-        y: 400,
-        ease: "power4.inOut"
-    })
+      gsap.from(".header span", 1.5, {
+        delay: 5,
+        y: 700,
+        stagger: {
+          amount: 0.5,
+        },
+        ease: "power4.inOut",
+      })
+
+      gsap.to(".hero", {
+        opacity: 1,
+        width: "60%",
+        height: "40vh",
+        duration: 2.5,
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top 70%",
+          end: "top 80%",
+          toggleActions: "restart none none reverse",
+          markers: {
+            fontsize: "10px",
+          },
+        },
+      });
+    }
 
     // Handle click event on links to other pages
-      const links = document.querySelectorAll(".nav-link");
-      const img = document.querySelector(".hero img");
+    const links = document.querySelectorAll(".nav-link");
+    const img = document.querySelector(".hero img");
+    const overlay = document.querySelector(".overlay");
 
-      links.forEach(link => {
-        link.addEventListener("click", function(event) {
-          event.preventDefault(); // Prevent default navigation behavior
+    links.forEach((link) => {
+      link.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default navigation behavior
 
-          overlay.style.zIndex = 100
-          // img.style.display = "none"
+        overlay.style.zIndex = 100;
+        // img.style.display = "none"
 
-
-          // GSAP animation to move bars back up
-          gsap.to(".bar", 1.5, {
-            height: "100vh",
-            stagger: {
-              amount: 0.5,
-            },
-            ease: "power4.inOut",
-          });
-
-          // Delay for bar animation to complete
-          setTimeout(() => {
-            // Navigate to the destination page
-            window.location.href = link.getAttribute("href");
-          }, 1500); // Adjust this delay to match your bar animation duration
+        // GSAP animation to move bars back up
+        gsap.to(".bar", 1.5, {
+          height: "100vh",
+          stagger: {
+            amount: 0.5,
+          },
+          ease: "power4.inOut",
         });
+
+        // Delay for bar animation to complete
+        setTimeout(() => {
+          // Navigate to the destination page
+          window.location.href = link.getAttribute("href");
+        }, 1500); // Adjust this delay to match your bar animation duration
       });
+    });
+
     
   </script>
 </html>
